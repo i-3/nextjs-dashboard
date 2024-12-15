@@ -26,14 +26,16 @@ export function UpdateInvoice({ id }: { id: string }) {
 }
 
 export function DeleteInvoice({ id }: { id: string }) {
-  async function _deleteInvoice(id: string, formData: FormData) {
-    'use server';
-    await deleteInvoice(id);
-  }
-  const deleteInvoiceWithId = _deleteInvoice.bind(null, id);
+  // const deleteInvoiceWithId = deleteInvoice.bind(null, id);
 
   return (
-    <form action={deleteInvoiceWithId}>
+    // <form action={deleteInvoiceWithId}>
+    <form
+      action={async function () {
+        'use server';
+        await deleteInvoice(id);
+      }}
+    >
       <button className='rounded-md border p-2 hover:bg-gray-100'>
         <span className='sr-only'>Delete</span>
         <TrashIcon className='w-5' />
